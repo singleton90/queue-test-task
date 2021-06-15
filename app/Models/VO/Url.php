@@ -23,7 +23,7 @@ class Url implements UrlInterface
      */
     public function __construct(string $url)
     {
-        if (filter_var('example.com', FILTER_VALIDATE_URL) === false) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new WrongUrlException('Не верный формат url-адреса.');
         }
 

@@ -11,7 +11,9 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "*"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "*",
+        "ext-pdo": "*",
+        "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

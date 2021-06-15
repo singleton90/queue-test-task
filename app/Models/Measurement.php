@@ -71,12 +71,20 @@ final class Measurement implements MeasurementInterface
     }
 
     /**
+     * @return DateTimeInterface
+     */
+    public function finishTime(): DateTimeInterface
+    {
+        return $this->finishTime;
+    }
+
+    /**
      * @return DateInterval
      * @throws WrongTimeException
      */
     public function executionTime(): DateInterval
     {
-        if (isset($this->finishTime)) {
+        if (!isset($this->finishTime)) {
             throw new WrongTimeException('Время окончания задачи не установлено.');
         }
 

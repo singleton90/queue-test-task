@@ -10,13 +10,13 @@
 <body class="py-5">
 
 <div class="container">
-    <div class="card">
+    <div class="card" id="app">
         <div class="card-body">
             <form class="row row-cols-lg-auto mb-4">
                 <div class="col-12">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="URL">
-                        <button type="submit" class="btn btn-primary">Добавить задачу</button>
+                        <input type="text" class="form-control" placeholder="URL" v-model="url">
+                        <button type="submit" class="btn btn-primary" v-on:click="addTask">Добавить задачу</button>
                     </div>
                 </div>
             </form>
@@ -34,32 +34,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>https://site.ru</td>
-                    <td><?= date('Y-m-d H:i:s') ?></td>
-                    <td>00:00:35</td>
-                    <td>10.549943</td>
-                    <td>10.100938</td>
-                    <td>10.300077</td>
-                    <td>10.300079</td>
-                </tr>
-                <tr>
-                    <td>https://site.ru</td>
-                    <td><?= date('Y-m-d H:i:s') ?></td>
-                    <td>00:00:35</td>
-                    <td>10.549943</td>
-                    <td>10.100938</td>
-                    <td>10.300077</td>
-                    <td>10.300079</td>
-                </tr>
-                <tr>
-                    <td>https://site.ru</td>
-                    <td><?= date('Y-m-d H:i:s') ?></td>
-                    <td>00:00:35</td>
-                    <td>10.549943</td>
-                    <td>10.100938</td>
-                    <td>10.300077</td>
-                    <td>10.300079</td>
+                <tr v-for="measurement in measurements">
+                    <td>@{{ measurement.url }}</td>
+                    <td>@{{ measurement.start_time }}</td>
+                    <td>@{{ measurement.execution_time }}</td>
+                    <td>@{{ measurement.total_time }}</td>
+                    <td>@{{ measurement.namelookup_time }}</td>
+                    <td>@{{ measurement.connect_time }}</td>
+                    <td>@{{ measurement.pretransfer_time }}</td>
                 </tr>
                 </tbody>
             </table>

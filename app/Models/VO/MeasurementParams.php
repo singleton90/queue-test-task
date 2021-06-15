@@ -40,6 +40,22 @@ final class MeasurementParams implements MeasurementParamsInterface
     }
 
     /**
+     * Возвращает экземпляр класса из массива, возвращаемого curl
+     *
+     * @param array $params
+     * @return static
+     */
+    public static function fromCurlGetinfo(array $params): self
+    {
+        return new MeasurementParams(
+            $params['total_time'],
+            $params['namelookup_time'],
+            $params['connect_time'],
+            $params['pretransfer_time']
+        );
+    }
+
+    /**
      * @return float
      */
     public function totalTime(): float
