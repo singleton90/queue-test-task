@@ -4957,12 +4957,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
   el: '#app',
   data: {
     measurements: [],
-    url: ''
+    url: '',
+    statistics: []
   },
   mounted: function mounted() {
     self = this;
     axios.get('/api').then(function (response) {
-      return self.measurements = response.data.measurements;
+      self.measurements = response.data.measurements;
+      self.statistics = response.data.statistics;
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -4979,6 +4981,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
       })["catch"](function (error) {
         return console.log(error.response.data);
       });
+      this.url = '';
     }
   }
 });

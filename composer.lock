@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6289379ba91852f9476aa03669e5daa4",
+    "content-hash": "7cb0e5b58e390aef91b345f7a049145f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4965,6 +4965,10 @@
                 }
             ],
             "description": "RabbitMQ driver for Laravel Queue. Supports Laravel Horizon.",
+            "support": {
+                "issues": "https://github.com/vyuldashev/laravel-queue-rabbitmq/issues",
+                "source": "https://github.com/vyuldashev/laravel-queue-rabbitmq/tree/v11.2.0"
+            },
             "time": "2021-03-16T20:22:24+00:00"
         },
         {
@@ -7688,8 +7692,10 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "7.4",
+        "ext-curl": "*",
+        "ext-pdo": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }

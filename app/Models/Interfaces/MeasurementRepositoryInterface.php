@@ -2,18 +2,21 @@
 
 namespace App\Models\Interfaces;
 
-use App\Models\Measurement;
 use App\Models\MeasurementCollection;
 
-interface MeasurementRepository
+/**
+ * Интерфейс для взаимодействия с хранилищем
+ *
+ * @package App\Models\Interfaces
+ */
+interface MeasurementRepositoryInterface
 {
     /**
      * Сохраняет модель в базу
      *
-     * @param Measurement $model
-     * @return Measurement
+     * @param MeasurementInterface $model
      */
-    public function save(Measurement $model): void;
+    public function save(MeasurementInterface $model): void;
 
     /**
      * Получает последние N замеров

@@ -53,7 +53,7 @@
                             Задач обработано
                         </div>
                         <div class="card-body text-center h4">
-                            50
+                            @{{ statistics.total_finished_tasks }}
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                             Задач в очереди
                         </div>
                         <div class="card-body text-center h4">
-                            50
+                            @{{ statistics.total_queue_tasks }}
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                             Среднее время на задачу
                         </div>
                         <div class="card-body text-center h4">
-                            50
+                            @{{ statistics.average_time_per_task }}
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                             Расчетное время завершения
                         </div>
                         <div class="card-body text-center h4">
-                            50
+                            @{{ statistics.expected_time_for_tasks }}
                         </div>
                     </div>
                 </div>

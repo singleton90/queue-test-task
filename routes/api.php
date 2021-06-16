@@ -21,22 +21,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('api')->post('/add-task', function (Request $request) {
-//    $startTime = new DateTimeImmutable();
-//    sleep(rand(1,3));
-//    $url = new Url($request->input('url'));
-//    $ch = curl_init();
-//    curl_setopt($ch, CURLOPT_URL, $url->urlString());
-//    curl_exec($ch);
-//    $info = curl_getinfo($ch);
-//    $finishTime = new DateTimeImmutable();
-//    $params = MeasurementParams::fromCurlGetinfo($info);
-//    $measurement = new Measurement($startTime, $url);
-//    $measurement->setFinishTime($finishTime);
-//    $measurement->setMeasurementParams($params);
-//    //TODO перенести PDO в DIC
-    $repository = new SqlMeasurementRepository(DB::connection()->getPdo());
-//    $repository->save($measurement);
-    dd($repository->latestMeasurements());
+    \App\Jobs\MeasurementTaskJob::dispatch($request->input('url'));
+    return true;
 })->name('add-task');
 
 Route::middleware('api')->get('/', function (Request $request) {

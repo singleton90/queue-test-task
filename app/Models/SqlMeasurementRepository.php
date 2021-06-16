@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Exceptions\WrongUrlException;
-use App\Models\Interfaces\MeasurementRepository;
+use App\Models\Interfaces\MeasurementInterface;
+use App\Models\Interfaces\MeasurementRepositoryInterface;
 use App\Models\VO\MeasurementParams;
 use App\Models\VO\Url;
 use DateTimeImmutable;
@@ -15,7 +16,7 @@ use PDOStatement;
  * Class SqlMeasurementRepository
  * @package App\Models
  */
-class SqlMeasurementRepository implements MeasurementRepository
+class SqlMeasurementRepository implements MeasurementRepositoryInterface
 {
     const DIVIDER = 1000000;
 
@@ -34,9 +35,9 @@ class SqlMeasurementRepository implements MeasurementRepository
     }
 
     /**
-     * @param Measurement $model
+     * @param MeasurementInterface $model
      */
-    public function save(Measurement $model): void
+    public function save(MeasurementInterface $model): void
     {
         $sql = 'INSERT INTO measurements (start_time, finish_time, url, total_time, namelookup_time, connect_time, pretransfer_time)
             VALUES (:start_time, :finish_time, :url, :total_time, :namelookup_time, :connect_time, :pretransfer_time)';
