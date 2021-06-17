@@ -8,25 +8,45 @@ const app = new Vue({
         measurements: [],
         url: '',
         statistics: [],
+        hasError: false,
+        errorMessage: '',
     },
     mounted: function () {
-        self = this;
-        axios.get('/api')
-            .then(function (response) {
-                self.measurements = response.data.measurements;
-                self.statistics = response.data.statistics;
-            })
-            .catch((error) => console.log(error));
+        this.refreshData();
+        setInterval(this.refreshData, 5000);
     },
     methods: {
-        addTask: function(event) {
-            event.preventDefault();
-
+        addTask: function(e) {
+            e.preventDefault();
+            self = this;
             axios.post('/api/add-task', {url: this.url})
-                .then((response) => this.data = response.data.response)
+                .then(function (response) {
+                    if (response.data.status === 'error') {
+                        self.addError(response.data.message);
+                    } else {
+                        self.removeError();
+                        self.url = '';
+                    }
+                    self.refreshData();
+                })
                 .catch((error) => console.log(error.response.data));
-
-            this.url = '';
+        },
+        refreshData: function () {
+            self = this;
+            axios.get('/api')
+                .then(function (response) {
+                    self.measurements = response.data.measurements;
+                    self.statistics = response.data.statistics;
+                })
+                .catch((error) => console.log(error));
+        },
+        addError: function (message) {
+            this.hasError = true;
+            this.errorMessage = message;
+        },
+        removeError: function (event) {
+            this.hasError = false;
+            this.errorMessage = '';
         }
     }
 })

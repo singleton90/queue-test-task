@@ -4958,30 +4958,43 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
   data: {
     measurements: [],
     url: '',
-    statistics: []
+    statistics: [],
+    hasError: false,
+    errorMessage: ''
   },
   mounted: function mounted() {
-    self = this;
-    axios.get('/api').then(function (response) {
-      self.measurements = response.data.measurements;
-      self.statistics = response.data.statistics;
-    })["catch"](function (error) {
-      return console.log(error);
-    });
+    this.refreshData();
+    setInterval(this.refreshData, 5000);
   },
   methods: {
     addTask: function addTask(event) {
-      var _this = this;
-
       event.preventDefault();
+      self = this;
       axios.post('/api/add-task', {
         url: this.url
       }).then(function (response) {
-        return _this.data = response.data.response;
+        if (response.data.status === 'error') {
+          self.hasError = true;
+          self.errorMessage = response.data.message;
+        } else {
+          self.hasError = false;
+          self.errorMessage = '';
+          self.url = '';
+        }
+
+        self.refreshData();
       })["catch"](function (error) {
         return console.log(error.response.data);
       });
-      this.url = '';
+    },
+    refreshData: function refreshData() {
+      self = this;
+      axios.get('/api').then(function (response) {
+        self.measurements = response.data.measurements;
+        self.statistics = response.data.statistics;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
     }
   }
 });

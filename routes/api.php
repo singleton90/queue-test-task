@@ -1,12 +1,11 @@
 <?php
 
-use App\Models\Measurement;
-use App\Models\SqlMeasurementRepository;
+use App\Jobs\MeasurementTaskJob;
+use App\Models\Interfaces\MeasurementRepositoryInterface;
+use App\Models\Interfaces\UrlInterface;
 use App\Models\ViewModels\MainViewModel;
-use App\Models\VO\MeasurementParams;
-use App\Models\VO\Url;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,11 +20,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('api')->post('/add-task', function (Request $request) {
-    \App\Jobs\MeasurementTaskJob::dispatch($request->input('url'));
-    return true;
+
+    $url = trim($request->input('url'));
+
+    try {
+        $urlObj = App::make(UrlInterface::class, ['url' => $url]);
+        MeasurementTaskJob::dispatch($urlObj);
+        $result = ['status' => 'success'];
+    } catch (Exception $e) {
+        $result = ['status' => 'error', 'message' => $e->getMessage()];
+    }
+
+    return $result;
+
 })->name('add-task');
 
 Route::middleware('api')->get('/', function (Request $request) {
-    $repository = new SqlMeasurementRepository(DB::connection()->getPdo());
+
+    $repository = App::make(MeasurementRepositoryInterface::class);
+
     return (new MainViewModel($repository))->data();
+
 });

@@ -2,7 +2,6 @@
 
 namespace App\Models\Interfaces;
 
-use DateInterval;
 use DateTimeInterface;
 
 /**
@@ -17,9 +16,9 @@ interface MeasurementInterface
     public function startTime(): DateTimeInterface;
 
     /**
-     * @return DateInterval
+     * @return DateTimeInterface
      */
-    public function executionTime(): DateInterval;
+    public function executionTime(): DateTimeInterface;
 
     /**
      * @return UrlInterface

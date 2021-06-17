@@ -2,7 +2,7 @@
 
 namespace App\Models\Interfaces;
 
-use DateInterval;
+use DateTimeInterface;
 
 /**
  * Интерфейс для вывода статистики по задачам
@@ -28,14 +28,14 @@ interface TasksStatisticsInterface
     /**
      * Среднее время выполнения задачи
      *
-     * @return DateInterval
+     * @return DateTimeInterface
      */
-    public function averageTimePerTask(): DateInterval;
+    public function averageTimePerTask(): DateTimeInterface;
 
     /**
      * Рассчетное время выполнения оставшихся задач
      *
-     * @return DateInterval
+     * @return DateTimeInterface
      */
-    public function expectedTimeForTasks(): DateInterval;
+    public function expectedTimeForTasks(): DateTimeInterface;
 }

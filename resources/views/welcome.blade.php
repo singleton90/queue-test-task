@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Фоновое задание + очередь</title>
     <link href="css/app.css" rel="stylesheet">
 </head>
 <body class="py-5">
@@ -14,9 +14,15 @@
         <div class="card-body">
             <form class="row row-cols-lg-auto mb-4">
                 <div class="col-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="URL" v-model="url">
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" placeholder="URL"
+                               v-bind:class="{'is-invalid': hasError}"
+                               v-model="url"
+                        >
                         <button type="submit" class="btn btn-primary" v-on:click="addTask">Добавить задачу</button>
+                        <div class="invalid-tooltip">
+                            @{{ errorMessage }}
+                        </div>
                     </div>
                 </div>
             </form>

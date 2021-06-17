@@ -6,7 +6,7 @@ use App\Exceptions\WrongTimeException;
 use App\Models\Interfaces\MeasurementInterface;
 use App\Models\Interfaces\MeasurementParamsInterface;
 use App\Models\Interfaces\UrlInterface;
-use DateInterval;
+use DateTimeImmutable;
 use DateTimeInterface;
 
 /**
@@ -79,16 +79,18 @@ final class Measurement implements MeasurementInterface
     }
 
     /**
-     * @return DateInterval
+     * @return DateTimeInterface
      * @throws WrongTimeException
      */
-    public function executionTime(): DateInterval
+    public function executionTime(): DateTimeInterface
     {
         if (!isset($this->finishTime)) {
             throw new WrongTimeException('Время окончания задачи не установлено.');
         }
 
-        return $this->startTime->diff($this->finishTime);
+        $interval = $this->finishTime->getTimestamp() - $this->startTime->getTimestamp();
+
+        return (new DateTimeImmutable())->setTimestamp($interval);
     }
 
     /**

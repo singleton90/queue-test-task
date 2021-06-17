@@ -4,11 +4,10 @@ namespace App\Models;
 
 use App\Exceptions\WrongTimeException;
 use App\Models\Interfaces\TasksStatisticsInterface;
-use DateInterval;
-use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Exception;
-use Illuminate\Queue\Queue;
+use Illuminate\Support\Facades\Queue;
 
 /**
  * Class TasksStatistics
@@ -16,6 +15,7 @@ use Illuminate\Queue\Queue;
  */
 class TasksStatistics implements TasksStatisticsInterface
 {
+    /** @var MeasurementCollection  */
     private MeasurementCollection $collection;
 
     public function __construct(MeasurementCollection $collection)
@@ -36,38 +36,38 @@ class TasksStatistics implements TasksStatisticsInterface
      */
     public function totalQueueTasks(): int
     {
-        return 123;
+        return Queue::size();
     }
 
     /**
      * {@inheritdoc }
+     *
      * @throws WrongTimeException
      * @throws Exception
      */
-    public function averageTimePerTask(): DateInterval
+    public function averageTimePerTask(): DateTimeInterface
     {
-        $offset = new DateTime('@0');
+        $total = 0;
 
         foreach ($this->collection as $item) {
-            $offset->add($item->executionTime());
+            $total += $item->executionTime()->getTimestamp();
         }
 
-        $averageSeconds = round($offset->getTimestamp() / $this->collection->count());
+        $averageSeconds = round($total / $this->collection->count());
 
-        return new DateInterval('PT' . $averageSeconds . 'S');
+        return (new DateTimeImmutable())->setTimestamp($averageSeconds);
     }
 
     /**
      * {@inheritdoc }
+     *
      * @throws WrongTimeException
      * @throws Exception
      */
-    public function expectedTimeForTasks(): DateInterval
+    public function expectedTimeForTasks(): DateTimeInterface
     {
-        $reference = new DateTimeImmutable('@0');
-        $endTime = $reference->add($this->averageTimePerTask());
-        $time = ($endTime->getTimestamp() - $reference->getTimestamp()) * $this->totalQueueTasks();
+        $time = $this->averageTimePerTask()->getTimestamp() * $this->totalQueueTasks();
 
-        return new DateInterval('PT' . $time . 'S');
+        return (new DateTimeImmutable())->setTimestamp($time);
     }
 }

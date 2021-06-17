@@ -44,7 +44,7 @@ class MainViewModel
             $data['measurements'][] = [
                 'url' => $measurement->url()->urlString(),
                 'start_time' => $measurement->startTime()->format('Y-m-d H:i:s'),
-                'execution_time' => $measurement->executionTime()->format('%I:%S'),
+                'execution_time' => $measurement->executionTime()->format('i:s'),
                 'total_time' => $measurement->parameters()->totalTime(),
                 'namelookup_time' => $measurement->parameters()->namelookupTime(),
                 'connect_time' => $measurement->parameters()->connectTime(),
@@ -67,8 +67,8 @@ class MainViewModel
         $data['statistics'] = [
             'total_finished_tasks' => $statistics->totalFinishedTasks(),
             'total_queue_tasks' => $statistics->totalQueueTasks(),
-            'average_time_per_task' => $statistics->averageTimePerTask()->format('%I:%S'),
-            'expected_time_for_tasks' => $statistics->expectedTimeForTasks()->format('%H:%I:%S'),
+            'average_time_per_task' => $statistics->averageTimePerTask()->format('i:s'),
+            'expected_time_for_tasks' => $statistics->expectedTimeForTasks()->format('H:i:s'),
         ];
 
         return $data;
