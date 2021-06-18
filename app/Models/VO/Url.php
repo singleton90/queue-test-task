@@ -2,6 +2,7 @@
 
 namespace App\Models\VO;
 
+use App\Exceptions\EmptyUrlException;
 use App\Exceptions\WrongUrlException;
 use App\Models\Interfaces\UrlInterface;
 
@@ -20,10 +21,13 @@ class Url implements UrlInterface
      *
      * @param string $url
      * @throws WrongUrlException
+     * @throws EmptyUrlException
      */
     public function __construct(string $url)
     {
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+        if ($url === '') {
+            throw new EmptyUrlException('Заполните url-адрес.');
+        } elseif (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new WrongUrlException('Не верный формат url-адреса.');
         }
 

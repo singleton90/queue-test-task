@@ -45,7 +45,7 @@ class MeasurementService implements MeasurementServiceInterface
      * @param UrlInterface $url
      * @return array
      */
-    private function getCurlInfo(UrlInterface $url): array
+    public function getCurlInfo(UrlInterface $url): array
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url->urlString());
