@@ -90,6 +90,8 @@ final class Measurement implements MeasurementInterface
 
         $interval = $this->finishTime->getTimestamp() - $this->startTime->getTimestamp();
 
+        date_default_timezone_set('UTC');
+
         return (new DateTimeImmutable())->setTimestamp($interval);
     }
 

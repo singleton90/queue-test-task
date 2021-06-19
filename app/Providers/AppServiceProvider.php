@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(MeasurementRepositoryInterface::class, function() {
+        $this->app->singleton(MeasurementRepositoryInterface::class, function() {
             return new SqlMeasurementRepository(DB::connection()->getPdo());
         });
 
